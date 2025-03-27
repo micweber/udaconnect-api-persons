@@ -24,6 +24,7 @@ def create_app(env=None):
     def health():
         return jsonify("healthy - yeah!")
 
+    logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
     logger = logging.getLogger(__name__)
     logger.info("#1")
     return app

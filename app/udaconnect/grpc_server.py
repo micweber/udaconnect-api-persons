@@ -5,6 +5,7 @@ from app.udaconnect import person_pb2
 from app.udaconnect import person_pb2_grpc
 import logging
 
+logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 class PersonServiceGRPC(person_pb2_grpc.PersonServiceServicer):
