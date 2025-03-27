@@ -24,5 +24,6 @@ def create_app(env=None):
     def health():
         return jsonify("healthy - yeah!")
 
-    logging.info("Flask server initiated #2")
+    logger = logging.getLogger(__name__)
+    logger.info("#1")
     return app

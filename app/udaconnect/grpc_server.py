@@ -1,9 +1,11 @@
-import logging
 import grpc
 from concurrent import futures
 import time
 from app.udaconnect import person_pb2
 from app.udaconnect import person_pb2_grpc
+import logging
+
+logger = logging.getLogger(__name__)
 
 class PersonServiceGRPC(person_pb2_grpc.PersonServiceServicer):
     def GetPersons(self, request, context):
@@ -20,5 +22,5 @@ def serve_grpc():
     person_pb2_grpc.add_PersonServiceServicer_to_server(PersonServiceGRPC(), server)
     server.add_insecure_port("[::]:5005")
     server.start()
-    logging.info("gRPC server is running on port 5005...")
+    logger.info("gRPC server is running on port 5005...")
     server.wait_for_termination()
