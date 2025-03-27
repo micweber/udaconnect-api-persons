@@ -23,4 +23,5 @@ def create_app(env=None):
     def health():
         return jsonify("healthy")
 
+    print("Flask server initiated #2")
     return app
