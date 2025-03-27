@@ -14,6 +14,7 @@ class PersonServiceGRPC(person_pb2_grpc.PersonServiceServicer):
 
 
 def serve_grpc():
+    print("Starting gRPC server...")
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     person_pb2_grpc.add_PersonServiceServicer_to_server(PersonServiceGRPC(), server)
     server.add_insecure_port("[::]:5005")
