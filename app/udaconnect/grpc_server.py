@@ -1,8 +1,8 @@
 import grpc
 from concurrent import futures
 import time
-import person_pb2
-import person_pb2_grpc
+from app.udaconnect import person_pb2
+from app.udaconnect import person_pb2_grpc
 
 class PersonServiceGRPC(person_pb2_grpc.PersonServiceServicer):
     def GetPersons(self, request, context):
