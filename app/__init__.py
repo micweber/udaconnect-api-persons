@@ -22,7 +22,7 @@ def create_app(env=None):
     @app.route("/health")
     def health():
         print("Flask server initiated #3")
-        return jsonify("healthy")
+        return jsonify("healthy - yeah!")
 
     print("Flask server initiated #2")
     return app
