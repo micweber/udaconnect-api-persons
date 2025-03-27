@@ -1,3 +1,4 @@
+import logging
 from flask import Flask, jsonify
 from flask_cors import CORS
 from flask_restx import Api
@@ -21,8 +22,7 @@ def create_app(env=None):
 
     @app.route("/health")
     def health():
-        print("Flask server initiated #3")
         return jsonify("healthy - yeah!")
 
-    print("Flask server initiated #2")
+    logging.info("Flask server initiated #2")
     return app
