@@ -1,5 +1,6 @@
 import logging
 import sys
+import threading
 from flask import Flask, jsonify
 from flask_cors import CORS
 from flask_restx import Api
@@ -11,6 +12,7 @@ db = SQLAlchemy()
 def create_app(env=None):
     from app.config import config_by_name
     from app.routes import register_routes
+    from app.udaconnect.grpc_server import serve_grpc
 
     app = Flask(__name__)
     app.config.from_object(config_by_name[env or "test"])
@@ -28,4 +30,8 @@ def create_app(env=None):
     logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
     logger = logging.getLogger(__name__)
     logger.info("#1")
+    
+    grpc_thread = threading.Thread(target=serve_grpc, daemon=True)
+    grpc_thread.start()
+    
     return app
