@@ -4,6 +4,7 @@ from concurrent import futures
 import time
 from app.udaconnect import person_pb2
 from app.udaconnect import person_pb2_grpc
+from app.udaconnect.services import PersonService
 import logging
 
 logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
@@ -11,10 +12,26 @@ logger = logging.getLogger(__name__)
 
 class PersonServiceGRPC(person_pb2_grpc.PersonServiceServicer):
     def GetPersons(self, request, context):
+
+        # Database query
+        persons_from_db = PersonService.retrieve_all()
+
+        # convert into gRPC objects
         persons = [
-            person_pb2.PersonMessage(id=1, first_name="Alice", last_name="Smith", company_name="TechCorp"),
-            person_pb2.PersonMessage(id=6, first_name="Bob", last_name="Johnson", company_name="SoftInc")
+            person_pb2.PersonMessage(
+                id=person.id,
+                first_name=person.first_name,
+                last_name=person.last_name,
+                company_name=person.company_name
+            )
+            for person in persons_from_db
         ]
+
+#
+ #       persons = [
+  #          person_pb2.PersonMessage(id=1, first_name="Alice", last_name="Smith", company_name="TechCorp"),
+   #         person_pb2.PersonMessage(id=6, first_name="Bob", last_name="Johnson", company_name="SoftInc")
+    #    ]
         return person_pb2.PersonMessageList(persons=persons)
 
 
